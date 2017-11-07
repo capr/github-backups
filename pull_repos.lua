@@ -8,6 +8,7 @@ local function list_repos(user)
 	while true do
 		local s = glue.readpipe('wget -qO- --no-check-certificate '..
 			'https://api.github.com/users/'..user..'/repos?page='..i)
+		assert(#s > 0, 'probably github API rate limit exceeded.')
 		local t = cjson.decode(s)
 		if #t == 0 then
 			break
